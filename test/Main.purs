@@ -1,6 +1,7 @@
 module Test.Main where
 
 import Prelude
+
 import Data.Either (Either(..))
 import Effect (Effect)
 import Effect.Class.Console (log)
@@ -10,7 +11,8 @@ import Erl.Data.Binary.IOData (IOData)
 import Erl.Data.Binary.IOData as IOData
 import Erl.Data.Binary.UTF8 as UTF8String
 import Erl.File (Reason(..), deleteFile, readFile, writeFile)
-import Test.Assert (assert, assertEqual)
+import Erl.FileLib (mkTemp)
+import Test.Assert (assert, assertEqual, assertFalse')
 
 testBinary :: Binary
 testBinary = UTF8String.toBinary $ "Testing testing 123\nhello\n"
@@ -32,3 +34,6 @@ main = do
   log "deleteFile"
   res3 <- deleteFile tmpFile
   assert $ res3 == Right unit
+  log "mkTemp dir"
+  res4 <- mkTemp
+  assertFalse' "String is empty" $ res4 == ""

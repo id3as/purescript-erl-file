@@ -1,5 +1,5 @@
 -module(erl_fileLib@foreign).
--export([ensureDir_/1, fileSize/1, isDir/1, isFile/1, isRegular/1]).
+-export([ensureDir_/1, fileSize/1, isDir/1, isFile/1, isRegular/1, mkTemp_/0]).
 
 ensureDir_(Name) -> fun () ->
   filelib:ensure_dir(Name)
@@ -21,3 +21,19 @@ isRegular(Name) -> fun() ->
   filelib:is_regular(Name)
 end.
 
+mkTemp_() -> fun() ->
+  case os:type of
+    {unix, _} ->
+      string:chomp(os:cmd("mktemp -t -d -q pserl.XXXXXXXX"));
+    _ ->
+      Temp = case os:getenv("TEMP") of
+                Val -> Val;
+                false -> file:get_cwd()
+             end,
+
+      Rand = integer_to_list(base64:encode(crypto:strong_rand_bytes(16))),
+      Path = filename:join(Temp, Rand),
+      ok = filelib:ensure_dir(Path),
+      Path
+  end
+end.
