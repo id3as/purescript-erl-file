@@ -22,7 +22,7 @@ isRegular(Name) -> fun() ->
 end.
 
 mkTemp_() -> fun() ->
-  case os:type of
+  case os:type() of
     {unix, _} ->
       string:chomp(os:cmd("mktemp -t -d -q pserl.XXXXXXXX"));
     _ ->
