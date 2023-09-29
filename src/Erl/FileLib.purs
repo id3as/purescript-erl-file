@@ -2,8 +2,7 @@ module Erl.FileLib
   ( ensureDir
   , mkTemp
   , module StandardResult
-  )
-  where
+  ) where
 
 import Prelude
 
@@ -16,7 +15,6 @@ foreign import ensureDir_ :: String -> Effect (ReasonResult Unit)
 
 ensureDir :: String -> Effect (Either Reason Unit)
 ensureDir f = standardResultToEither <$> ensureDir_ f
-
 
 foreign import fileSize :: String -> Effect Int
 

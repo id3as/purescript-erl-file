@@ -24,7 +24,7 @@ end.
 mkTemp_() -> fun() ->
   case os:type() of
     {unix, _} ->
-      string:chomp(os:cmd("mktemp -t -d -q pserl.XXXXXXXX"));
+      erlang:list_to_binary(string:chomp(os:cmd("mktemp -t -d -q pserl.XXXXXXXX")));
     _ ->
       Temp = case os:getenv("TEMP") of
                 Val -> Val;
@@ -34,6 +34,6 @@ mkTemp_() -> fun() ->
       Rand = integer_to_list(base64:encode(crypto:strong_rand_bytes(16))),
       Path = filename:join(Temp, Rand),
       ok = filelib:ensure_dir(Path),
-      Path
+      erlang:list_to_binary(Path)
   end
 end.
