@@ -12,8 +12,8 @@ import Erl.Data.Binary.IOData as IOData
 import Erl.Data.Binary.UTF8 as UTF8String
 import Erl.Data.List as List
 import Erl.File (Reason(..), deleteDir, deleteDirRecursive, deleteFile, listDir, readFile, writeFile)
-import Erl.FileLib (ensureDir)
-import Test.Assert (assert, assertEqual)
+import Erl.FileLib (ensureDir, mkTemp)
+import Test.Assert (assert, assertEqual, assertFalse')
 
 testBinary :: Binary
 testBinary = UTF8String.toBinary $ "Testing testing 123\nhello\n"
