@@ -27,8 +27,8 @@ mkTemp_() -> fun() ->
       erlang:list_to_binary(string:chomp(os:cmd("mktemp -t -d -q pserl.XXXXXXXX")));
     _ ->
       Temp = case os:getenv("TEMP") of
-                Val -> Val;
-                false -> file:get_cwd()
+                false -> file:get_cwd();
+                Val -> Val
              end,
 
       Rand = integer_to_list(base64:encode(crypto:strong_rand_bytes(16))),
